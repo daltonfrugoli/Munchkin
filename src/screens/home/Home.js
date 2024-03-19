@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import { styles } from './Home.style';
-import { HomeButton } from '../components/homeButton/HomeButton';
+import { HomeButton } from '../../components/homeButton/HomeButton';
 
 export function Home({navigation, route}){
 
@@ -17,7 +17,7 @@ export function Home({navigation, route}){
            <View style={ styles.titleContainer }>
                 <Text style={ styles.titleText }>Munchkin</Text>
                 <Text style={ styles.titleText }>Counter</Text>
-                <Image source={ require('../assets/images/pngegg.png') } style={ styles.logo }/>
+                <Image source={ require('../../assets/images/pngegg.png') } style={ styles.logo }/>
            </View>
            <View style={ styles.buttonsContainer }>
                 <HomeButton 

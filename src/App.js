@@ -8,9 +8,10 @@ import {
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Home } from './home/Home'
-import { GameMode } from './gameMode/GameMode'; 
-import { AdventureConfig } from './adventureConfig/AdventureConfig';
+import { Home } from './screens/home/Home'
+import { GameMode } from './screens/gameMode/GameMode'; 
+import { AdventureConfig } from './screens/adventureConfig/AdventureConfig';
+import { Match } from './screens/match/Match';
 
 const Stack = createNativeStackNavigator()
 
@@ -21,6 +22,7 @@ function App(){
           <Stack.Screen name='Home' component={ Home }/>
           <Stack.Screen name='GameMode' component={ GameMode }/>
           <Stack.Screen name='AdventureConfig' component={ AdventureConfig }/>
+          <Stack.Screen name='Match' component={ Match }/>
         </Stack.Navigator>
       </NavigationContainer>
   )

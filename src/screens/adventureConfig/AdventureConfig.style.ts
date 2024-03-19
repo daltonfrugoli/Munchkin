@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     contentBackground: {
         backgroundColor: '#F2C181',
         width: '80%',
-        height: '95%',
+        height: '90%',
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20
     },
@@ -19,13 +19,33 @@ export const styles = StyleSheet.create({
         height: '100%',
         alignSelf: 'center'
     },
+    addAndRmPlayerButtons:{
+        flexDirection: 'row'
+    },
     addButton: {
         backgroundColor: '#E79022',
-        width: 100,
-        height: 45,
+        width: 60,
+        height: 35,
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 10,
+        borderRadius: 5,
+        fontWeight: 'bold',
+        marginTop: 15,
+        marginRight: 10
+    },
+    addButtonsText: {
+        fontSize: 25,
         fontWeight: 'bold'
+    },
+    startButton: {
+        width: '100%',
+        height: 50,
+        backgroundColor: '#E79022',
+        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    startButtonText: {
+        fontFamily: 'Windlass'
     }
 })
