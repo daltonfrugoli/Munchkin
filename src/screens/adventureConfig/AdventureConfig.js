@@ -14,6 +14,7 @@ import { Header } from '../../components/header/Header'
 import { TextInput } from 'react-native-paper';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Match } from "../match/Match";
+import { munchkin } from "../../classes/MunchkinClass";
 
 
 export function AdventureConfig({navigation}){
@@ -27,13 +28,13 @@ export function AdventureConfig({navigation}){
         }
     ]);
 
-    class munchkin {
+    /*class munchkin {
         constructor(id, name, gender){
             this.id = id
             this.name = name
             this.gender = gender 
         }
-    }
+    }*/
 
     const switchGender = (gender, index) => {
         // Faz uma cópia do array de objetos
@@ -89,6 +90,7 @@ export function AdventureConfig({navigation}){
                                         gender={item.gender} 
                                         changeGender={(gender) => switchGender(gender, index)}
                                         changeName={(text) => changeName(text, index)}
+                                        key = {index}
                                     />
                                 ) 
                             })
@@ -106,7 +108,8 @@ export function AdventureConfig({navigation}){
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity 
-                                style={ styles.addButton }
+                                style={[styles.addButton, {opacity: munchkins.length == 1 ? 0.6 : 1}]}
+                                disabled={munchkins.length == 1 ? true : false}
                                 onPress={() => {
                                     exPlayer(munchkins.length - 1)
                                 }}
