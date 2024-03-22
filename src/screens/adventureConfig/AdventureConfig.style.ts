@@ -4,15 +4,15 @@ export const styles = StyleSheet.create({
     
     fullBackground: {
         flex: 1,
-        backgroundColor: '#240F03',
-        alignItems: 'center'
+        backgroundColor: '#240F03'
     },
     contentBackground: {
         backgroundColor: '#F2C181',
         width: '80%',
         height: '90%',
         borderBottomLeftRadius: 20,
-        borderBottomRightRadius: 20
+        borderBottomRightRadius: 20,
+        alignSelf: 'center'
     },
     contentContainer: {
         width: '85%',

@@ -4,9 +4,12 @@ export const styles = StyleSheet.create({
     cardContainer: {
         height: 200, 
         width: '90%', 
+        maxWidth: 600,
         backgroundColor: '#F2C181',
         borderRadius: 10,
-        flexDirection:'row'
+        flexDirection:'row',
+        alignSelf: 'center',
+        marginVertical: 15
     },
     cardImage: {
         resizeMode: "contain",
@@ -77,7 +80,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
-    totalPowerText: {
+    totalPowerTitle: {
         fontSize: 18,
         fontFamily: 'Windlass',
         marginRight: 16
@@ -92,6 +95,11 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         transform: [{scaleX: 1.3}]
+    },
+    totalPowerText: {
+        fontFamily: 'Windlass',
+        transform: [{scaleY: 1.3}],
+        fontSize: 20
     },
     statsDisplay: {
         height: 60,
@@ -117,13 +125,20 @@ export const styles = StyleSheet.create({
         width: '45%',
         backgroundColor: '#AB0A0A',
         borderBottomLeftRadius: 5,
-        borderTopLeftRadius: 5
+        borderTopLeftRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     greenPointButton: {
         height: '100%',
         width: '45%',
         backgroundColor: '#078614',
         borderBottomRightRadius: 5,
-        borderTopRightRadius: 5
+        borderTopRightRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    statsButtonIcon: {
+        color: '#FFFFFF'
     }
 })

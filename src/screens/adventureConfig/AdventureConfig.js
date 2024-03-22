@@ -13,7 +13,6 @@ import { AddMunchkin } from "../../components/addMunchkin/AddMunchkin";
 import { Header } from '../../components/header/Header'
 import { TextInput } from 'react-native-paper';
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { Match } from "../match/Match";
 import { munchkin } from "../../classes/MunchkinClass";
 
 
@@ -28,19 +27,11 @@ export function AdventureConfig({navigation}){
         }
     ]);
 
-    /*class munchkin {
-        constructor(id, name, gender){
-            this.id = id
-            this.name = name
-            this.gender = gender 
-        }
-    }*/
-
     const switchGender = (gender, index) => {
         // Faz uma cópia do array de objetos
         const newMunchkins = [...munchkins];
         
-        // Modifica a propriedade "value" do objeto no índice especificado
+        // Modifica a propriedade gender do objeto no índice especificado
         newMunchkins[index] = { ...newMunchkins[index], gender: gender };
     
         // Atualiza o estado com o novo array
@@ -48,10 +39,13 @@ export function AdventureConfig({navigation}){
     };
 
     const changeName = (text, index) => {
+        // Faz uma cópia do array de objetos
         const newName = [...munchkins]
 
+        // Modifica a propriedade name do objeto no índice especificado
         newName[index] = { ...newName[index], name: text };
 
+        // Atualiza o estado com o novo array
         setMunchkins(newName)
     }
 
@@ -68,20 +62,19 @@ export function AdventureConfig({navigation}){
         <SafeAreaView style={ styles.fullBackground }>
             <Header title={'Adventure config.'}/>
             <View style={ styles.contentBackground }>
-                <View style={ styles.contentContainer }>
-                    <Text style={{fontFamily: 'Windlass', fontSize: 30, color: '#000000', marginTop: 50}}>Name your</Text>
-                    <Text style={{fontFamily: 'Windlass', fontSize: 30, color: '#000000'}}>adventure</Text>
-                    <TextInput
-                        label="Adventure's name"
-                        value={text}
-                        onChangeText={text => setText(text)}
-                        style={{backgroundColor: '#F2C181'}}
-                        outlineColor="#555555"
-                        activeOutlineColor="#000000"
-                    />
-                    <Text style={{fontFamily: 'Windlass', fontSize: 30, color: '#000000', marginTop: 50}}>Munchkins</Text>
-                    <ScrollView>
-
+                <ScrollView>
+                    <View style={ styles.contentContainer }>
+                        <Text style={{fontFamily: 'Windlass', fontSize: 30, color: '#000000', marginTop: 50}}>Name your</Text>
+                        <Text style={{fontFamily: 'Windlass', fontSize: 30, color: '#000000'}}>adventure</Text>
+                        <TextInput
+                            label="Adventure's name"
+                            value={text}
+                            onChangeText={text => setText(text)}
+                            style={{backgroundColor: '#F2C181'}}
+                            outlineColor="#555555"
+                            activeOutlineColor="#000000"
+                        />
+                        <Text style={{fontFamily: 'Windlass', fontSize: 30, color: '#000000', marginTop: 50}}>Munchkins</Text>
                         {
                             munchkins.map((item, index) => {
                                 return(
@@ -118,29 +111,18 @@ export function AdventureConfig({navigation}){
                                     <Text style={styles.addButtonsText}>-</Text>
                                     <Ionicons style={styles.addButtonsText} name="person-outline"/>
                                 </View>
-                                
                             </TouchableOpacity>
                         </View>
-                        
-                    </ScrollView>
-                    <TouchableOpacity 
-                        style={styles.startButton}
-                        onPress={() => {
-                            navigation.navigate('Match', { data: munchkins })
-                        }}
-                    >
-                        <Text style={styles.startButtonText}>START</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity 
-                        style={[ styles.addButton, { backgroundColor: 'green' }]}
-                        onPress={() => {
-                            console.log(munchkins)
-                        }}
-                    >
-                        <Text>teste</Text>
-                    </TouchableOpacity>
-                </View>
+                    </View>
+                </ScrollView>
+                <TouchableOpacity 
+                    style={styles.startButton}
+                    onPress={() => {
+                        navigation.navigate('Match', { data: munchkins, title: text })
+                    }}
+                >
+                    <Text style={styles.startButtonText}>START</Text>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     )
