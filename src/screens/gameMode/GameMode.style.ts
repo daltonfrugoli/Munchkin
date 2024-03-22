@@ -13,11 +13,11 @@ export const styles = StyleSheet.create({
     },
     titleContainer: {
         alignItems: 'center',
-        marginTop: 60,
-        fontWeight: 'bold'
+        marginTop: 50,
+        flex: 1
     },
     buttonsContainer: {
         alignItems: 'center',
-        marginTop: 250
+        marginBottom: 40
     }
 })

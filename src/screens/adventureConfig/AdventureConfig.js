@@ -64,7 +64,7 @@ export function AdventureConfig({navigation}){
             <View style={ styles.contentBackground }>
                 <ScrollView>
                     <View style={ styles.contentContainer }>
-                        <Text style={{fontFamily: 'Windlass', fontSize: 30, color: '#000000', marginTop: 50}}>Name your</Text>
+                        <Text style={{fontFamily: 'Windlass', fontSize: 30, color: '#000000', marginTop: 20}}>Name your</Text>
                         <Text style={{fontFamily: 'Windlass', fontSize: 30, color: '#000000'}}>adventure</Text>
                         <TextInput
                             label="Adventure's name"

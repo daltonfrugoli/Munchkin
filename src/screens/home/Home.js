@@ -15,7 +15,6 @@ export function Home({navigation, route}){
 
     return(
         <SafeAreaView style={styles.fullScreen}>
-            <ScrollView>
                 <View style={styles.titleContainer}>
                     <Text style={styles.titleText}>Munchkin</Text>
                     <Text style={styles.titleText}>Counter</Text>
@@ -24,9 +23,8 @@ export function Home({navigation, route}){
                 <View style={styles.buttonsContainer}>
                     <HomeButton 
                         text={'new game'} press={'GameMode'}/>
-                    <HomeButton text={'continue game'}/>
+                    <HomeButton disabled={true} text={'continue game'}/>
                 </View>                     
-           </ScrollView>
         </SafeAreaView>
     )
 } 

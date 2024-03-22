@@ -14,12 +14,13 @@ export const HomeButton = (props) => {
 
     return(
         <TouchableOpacity 
-            style={ styles.buttonContainer }
+            style={[styles.buttonContainer, {opacity: props.disabled ? 0.6 : 1}]}
             onPress={() => {
                 navigation.navigate(props.press)
             }}
+            disabled={props.disabled}
         >
-            <Text style={ styles.buttonText }>{props.text}</Text>
+            <Text style={styles.buttonText}>{props.text}</Text>
         </TouchableOpacity>
     )
    

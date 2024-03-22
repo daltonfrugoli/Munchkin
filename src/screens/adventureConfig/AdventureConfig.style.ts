@@ -10,8 +10,8 @@ export const styles = StyleSheet.create({
         backgroundColor: '#F2C181',
         width: '80%',
         height: '90%',
-        borderBottomLeftRadius: 20,
-        borderBottomRightRadius: 20,
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10,
         alignSelf: 'center'
     },
     contentContainer: {
@@ -38,12 +38,14 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     startButton: {
-        width: '100%',
+        width: '90%',
         height: 50,
         backgroundColor: '#E79022',
         borderRadius: 5,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignSelf: 'center',
+        marginBottom: 15
     },
     startButtonText: {
         fontFamily: 'Windlass'

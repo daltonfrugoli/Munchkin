@@ -14,15 +14,17 @@ export const styles = StyleSheet.create({
     titleContainer: {
         alignItems: 'center',
         marginTop: 60,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        flex: 1
     },
     logo: {
-        height: 230,
+        height: 180,
         width: 180,
-        marginTop: 50
+        marginTop: 30,
+        resizeMode: 'contain'
     },
     buttonsContainer: {
         alignItems: 'center',
-        marginTop: 50
+        marginBottom: 30
     }
 })
