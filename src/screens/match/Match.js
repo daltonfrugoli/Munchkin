@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 
 import { styles } from "./Match.style";
+import { Header } from "../../components/header/Header";
+import { MatchFooter } from "../../components/matchFooter/MatchFooter";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { MunchkinStats } from "../../classes/MunchkinClass";
 
@@ -73,6 +75,12 @@ export function Match({navigation, route}){
         setMunchkinsCardData(alterMod)
     }
 
+    function switchGender(gender, index){  
+        const alterGender = [...munchkinsCardData];      
+        alterGender[index] = { ...alterGender[index], gender: gender };  
+        setMunchkinsCardData(alterGender);
+    };
+
     //componente que renderiza os stats displays
     const StatsCounter = (props) => {
 
@@ -101,7 +109,7 @@ export function Match({navigation, route}){
                             }
                         }}
                     >
-
+                        <Ionicons style={styles.statsButtonIcon} name="caret-down-outline"/>
                     </TouchableOpacity>
                     <TouchableOpacity 
                         style={styles.greenPointButton}
@@ -122,7 +130,7 @@ export function Match({navigation, route}){
                             
                         }}
                     >
-
+                        <Ionicons style={styles.statsButtonIcon} name="caret-up-outline"/>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -159,18 +167,20 @@ export function Match({navigation, route}){
                     <View style={styles.rightUnderView}>
                         <View style={styles.genderButtonContainer}>
                             <TouchableOpacity
-                                style={styles.genderButton}
+                                style={[styles.genderButton, {backgroundColor: munchkinsCardData[index].gender == 'M' ? '#268A0B': '#AC0A0A'}]}
                                 onPress={() => {
-                                    console.log(munchkinsCardData)
+                                    switchGender(munchkinsCardData[index].gender == 'M' ? 'F' : 'M', index)
                                 }}
                             >
                                 <Ionicons style={styles.genderIcon} name={item.gender == 'M' ? 'male-sharp' : 'female-sharp'}/>
                             </TouchableOpacity>
-                        </View>
+                        </View> 
                         <View style={styles.totalPowerContainer}>
-                            <Text style={styles.totalPowerText}>Total{'\n'}{'\n'}Power</Text>
+                            <Text style={styles.totalPowerTitle}>Total{'\n'}{'\n'}Power</Text>
                             <View style={styles.totalPowerOvalView}>
-                                <Text>99</Text>
+                                <Text style={styles.totalPowerText}>
+                                    {munchkinsCardData[index].level + munchkinsCardData[index].gear + munchkinsCardData[index].mod}
+                                </Text>
                             </View>
                         </View>
                     </View>
@@ -180,14 +190,24 @@ export function Match({navigation, route}){
     }
 
     return(
-        <SafeAreaView style={{flex: 1, backgroundColor: '#240F03', alignItems: 'center'}}>    
+        <SafeAreaView style={{flex: 1, backgroundColor: '#240F03'}}>  
+            <Header title={route.params.title}/>
             <FlatList
-                contentContainerStyle = {{ paddingBottom: 100 }}
+                contentContainerStyle = {{ marginVertical: 15 }}
                 data = {munchkinsCardData}
                 keyExtractor = {item => item.id}
                 renderItem = {MunchkinCard}
                 numColumns = {1}
-            />       
+            />  
+            <MatchFooter/>     
         </SafeAreaView>
     )
 }
+
+/*<TouchableOpacity
+    onPress={() => {
+        console.log(munchkinsCardData)
+    }}           
+>
+    <Text style={{color: 'white', fontSize: 40}}>AQUI!!!</Text>
+</TouchableOpacity>*/

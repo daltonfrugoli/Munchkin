@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
     },
     titleContainer: {
         alignItems: 'center',
-        marginTop: '30%',
+        marginTop: 60,
         fontWeight: 'bold'
     },
     buttonsContainer: {

@@ -3,7 +3,8 @@ import React from 'react';
 import {
     SafeAreaView,
     View,
-    Text
+    Text,
+    ScrollView
 } from 'react-native';
 
 import { styles } from './GameMode.style';
@@ -15,14 +16,16 @@ export function GameMode(){
     return(
         <SafeAreaView style={ styles.fullBackground }>
             <Header title={'Game mode'}/>
-            <View style={ styles.titleContainer }>
-                <Text style={ styles.titleText }>Select the</Text>
-                <Text style={ styles.titleText }>game mode</Text>
-            </View>
-            <View style={ styles.buttonsContainer }>
-                <ModeButtons text={'local game'} press={'AdventureConfig'}/>
-                <ModeButtons text={'online game'} disabled={true}/>
-            </View>
+            <ScrollView>
+                <View style={ styles.titleContainer }>
+                    <Text style={ styles.titleText }>Select the</Text>
+                    <Text style={ styles.titleText }>game mode</Text>
+                </View>
+                <View style={ styles.buttonsContainer }>
+                    <ModeButtons text={'local game'} press={'AdventureConfig'}/>
+                    <ModeButtons text={'online game'} disabled={true}/>
+                </View>
+            </ScrollView>
         </SafeAreaView>
     )
 } 
