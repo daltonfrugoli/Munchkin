@@ -49,5 +49,34 @@ export const styles = StyleSheet.create({
     },
     startButtonText: {
         fontFamily: 'Windlass'
+    },
+    modalContainer: {
+        height: 180,
+        width: 250,
+        backgroundColor: '#F2C181',
+        alignItems: 'center',
+        alignSelf: 'center',
+        borderRadius: 15
+    },
+    modalTitleContainer: {
+        padding: 10,
+        flex: 1
+    },
+    modalTitleText: {
+        fontSize: 20
+    },
+    modalButtonsContainer: {
+        flexDirection: 'row',
+        marginBottom: 25
+    },
+    modalButtons: {
+        marginHorizontal: 10,
+        height: 30,
+        width: 80,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 2,
+        borderColor: '#000000'
     }
 })

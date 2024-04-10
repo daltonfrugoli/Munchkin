@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     exitButton: {
         height: 45,
         width: 45,
-        borderRadius: 20,
+        borderRadius: 50,
         borderWidth: 3,
         borderColor: 'black',
         backgroundColor: 'white',

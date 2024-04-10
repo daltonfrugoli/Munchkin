@@ -1,39 +1,18 @@
 export class munchkin {
-    constructor(id, name, gender){
-        this.id = id
+    constructor(tag, name, gender){
+        this.tag = tag
         this.name = name
         this.gender = gender 
     }
 }
 
 export class MunchkinStats {
-    constructor(id, name, gender){
-        this.id = id
+    constructor(tag, name, gender, level = 1, gear = 0, mod = 0){
+        this.tag = tag
         this.name = name
         this.gender = gender
-        this.level = 0,
-        this.gear = 0,
-        this.mod = 0
+        this.level = level,
+        this.gear = gear,
+        this.mod = mod
     }
-    /*subLevel(){
-        this.level--
-    }
-    addLevel(){
-        this.level++
-    }
-    subGear(){
-        this.gear--
-    }
-    addGear(){
-        this.gear++
-    }
-    subMod(){
-        this.mod--
-    }
-    addMod(){
-        this.mod++
-    }
-    switchGender(){
-        this.gender == 'M' ? this.gender = 'F' : this.gender = 'M'
-    }*/
 }

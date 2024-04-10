@@ -14,7 +14,12 @@ export const MatchFooter = (props) => {
 
     return(
         <View style={styles.footerContainer}>
-            <TouchableOpacity style={styles.exitButton}>
+            <TouchableOpacity 
+                style={styles.exitButton}
+                onPress={() => {
+                    props.modal(true)
+                }}
+            >
                 <Image style={styles.exitIcon} source={exitIcon}/>
             </TouchableOpacity>
         </View>

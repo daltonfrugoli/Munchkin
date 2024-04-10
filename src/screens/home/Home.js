@@ -5,11 +5,12 @@ import {
     View,
     Text,
     Image,
-    ScrollView
+    TouchableOpacity
 } from 'react-native';
 
 import { styles } from './Home.style';
 import { HomeButton } from '../../components/homeButton/HomeButton';
+import { db } from '../../App';
 
 export function Home({navigation, route}){
 
@@ -21,9 +22,22 @@ export function Home({navigation, route}){
                     <Image source={require('../../assets/images/pngegg.png')} style={styles.logo}/>
                 </View>
                 <View style={styles.buttonsContainer}>
-                    <HomeButton 
-                        text={'new game'} press={'GameMode'}/>
-                    <HomeButton disabled={true} text={'continue game'}/>
+                    <TouchableOpacity 
+                        style={{width: 60, height: 60, backgroundColor: 'white'}}
+                        onPress={() => {
+                            db.transaction((qr) => {
+                                qr.executeSql(
+                                    "SELECT * FROM munchkins",
+                                    [],
+                                    (_, results) => {
+                                        console.log(results.rows.raw())
+                                    }
+                                )
+                            })
+                        }}
+                    />
+                    <HomeButton text={'New Game'} press={'GameMode'}/>
+                    <HomeButton text={'Load Game'} press={'LoadGame'}/>
                 </View>                     
         </SafeAreaView>
     )
