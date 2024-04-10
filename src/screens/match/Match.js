@@ -10,10 +10,13 @@ import {
 } from 'react-native';
 
 import { styles } from "./Match.style";
+import { db } from "../../App"
 import { Header } from "../../components/header/Header";
 import { MatchFooter } from "../../components/matchFooter/MatchFooter";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import { MunchkinStats } from "../../classes/MunchkinClass";
+import Modal from "react-native-modal";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import globalVariables from "../../services/GlobalVariables";
 
 
 export function Match({navigation, route}){
@@ -28,16 +31,38 @@ export function Match({navigation, route}){
     useEffect(() => {
         if(munchkinsCardData.length < 1){
             munchkinsData.map((item, index) => {
-                munchkinsCardData.push(new MunchkinStats(item.id, item.name, item.gender))
+                munchkinsCardData.push(new MunchkinStats(item.tag, item.name, item.gender, item.level, item.gear, item.modfier ))
             })
         }
     }, [])
 
+    //registra o level atualizado no DB
+    function levelDBUpdate(index){
+        db.transaction((qr) => {
+            qr.executeSql(
+                "UPDATE munchkins SET level = ? WHERE game_id = ? AND tag = ?",
+                [munchkinsCardData[index].level, globalVariables.currentGameId, index],
+                (qr2, results) => {
+                    qr2.executeSql(
+                        "SELECT * FROM munchkins WHERE game_id = ? AND tag = ?",
+                        [globalVariables.currentGameId, index],
+                        (_, results) => {
+                            console.log(results.rows.raw())
+                        }
+                    )
+                }
+            )
+        })
+    }
+
     //subtrai 1 level
     function subLevel(index){
-        const alterLevel = [...munchkinsCardData]
-        alterLevel[index].level--
-        setMunchkinsCardData(alterLevel)
+        if(munchkinsCardData[index].level > 1){
+            const alterLevel = [...munchkinsCardData]
+            alterLevel[index].level--
+            setMunchkinsCardData(alterLevel)
+            levelDBUpdate(index)
+        }
     }
 
     //adiciona 1 level
@@ -45,6 +70,26 @@ export function Match({navigation, route}){
         const alterLevel = [...munchkinsCardData]
         alterLevel[index].level++
         setMunchkinsCardData(alterLevel)
+        levelDBUpdate(index)
+    }
+
+    //registra os pontos de equipamento atualizados no DB
+    function gearDBUpdate(index){
+        db.transaction((qr) => {
+            qr.executeSql(
+                "UPDATE munchkins SET gear = ? WHERE game_id = ? AND tag = ?",
+                [munchkinsCardData[index].gear, globalVariables.currentGameId, index],
+                (qr2, results) => {
+                    qr2.executeSql(
+                        "SELECT * FROM munchkins WHERE game_id = ? AND tag = ?",
+                        [globalVariables.currentGameId, index],
+                        (_, results) => {
+                            console.log(results.rows.raw())
+                        }
+                    )
+                }
+            )
+        })
     }
 
     //subtrai 1 ponto de equipamentos
@@ -52,6 +97,7 @@ export function Match({navigation, route}){
         const alterGear = [...munchkinsCardData]
         alterGear[index].gear--
         setMunchkinsCardData(alterGear)
+        gearDBUpdate(index)
     }
 
     //adiciona 1 ponto de equipamento
@@ -59,6 +105,26 @@ export function Match({navigation, route}){
         const alterGear = [...munchkinsCardData]
         alterGear[index].gear++
         setMunchkinsCardData(alterGear)
+        gearDBUpdate(index)
+    }
+
+    //registra os pontos de modificadores atualizados no DB
+    function modDBUpdate(index){
+        db.transaction((qr) => {
+            qr.executeSql(
+                "UPDATE munchkins SET modfier = ? WHERE game_id = ? AND tag = ?",
+                [munchkinsCardData[index].mod, globalVariables.currentGameId, index],
+                (qr2, results) => {
+                    qr2.executeSql(
+                        "SELECT * FROM munchkins WHERE game_id = ? AND tag = ?",
+                        [globalVariables.currentGameId, index],
+                        (_, results) => {
+                            console.log(results.rows.raw())
+                        }
+                    )
+                }
+            )
+        })
     }
 
     //subtrai 1 ponto de modificador 
@@ -66,6 +132,7 @@ export function Match({navigation, route}){
         const alterMod = [...munchkinsCardData]
         alterMod[index].mod--
         setMunchkinsCardData(alterMod)
+        modDBUpdate(index)
     }
 
     //adiciona 1 ponto de modificador 
@@ -73,6 +140,7 @@ export function Match({navigation, route}){
         const alterMod = [...munchkinsCardData]
         alterMod[index].mod++
         setMunchkinsCardData(alterMod)
+        modDBUpdate(index)
     }
 
     function switchGender(gender, index){  
@@ -92,7 +160,8 @@ export function Match({navigation, route}){
                 </View>
                 <View style={styles.pointsButtonContainer}>
                     <TouchableOpacity 
-                        style={styles.redPointButton}
+                        style={[styles.redPointButton, {opacity: props.title == 'Level' && props.number <= 1 ? 0.6 : 1}]}
+                        disabled={props.title == 'Level' && props.number <= 1 ? true : false}
                         onPress={() => {
                             switch (props.title) {
                                 case 'Level':
@@ -141,7 +210,7 @@ export function Match({navigation, route}){
     const MunchkinCard = ({item, index}) => {
 
         return(
-            <View style={styles.cardContainer}>
+            <View style={[styles.cardContainer, {backgroundColor: index % 2 == 0 ? '#F2C181' : '#B88A4E'}]}>
                 <View style={styles.leftView}>
                     <View style={styles.playerNameContainer}>
                         <Text style={{fontFamily: 'Windlass',}}>{item.name}</Text>
@@ -189,25 +258,54 @@ export function Match({navigation, route}){
         )
     }
 
+    //controla visibilidade do modal
+    const [modalIsVisible, setModalIsVisible] = useState(false)
+
+    const ModalTest = () => (
+ 
+        <Modal 
+            isVisible={modalIsVisible}
+            backdropOpacity={0.5}
+        >
+            <View style={styles.modalContainer}>
+                <View style={styles.modalTitleContainer}>
+                    <Text style={styles.modalTitleText}>Deseja salvar e sair?</Text>
+                </View>
+                <View style={styles.modalButtonsContainer}>
+                    <TouchableOpacity 
+                        onPress={() => {
+                            setModalIsVisible(false)
+                        }}
+                        style={styles.modalButtons}
+                    >
+                        <Text>Ok</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity 
+                        onPress={() => {
+                            setModalIsVisible(false)
+                        }}
+                        style={styles.modalButtons}
+                    >
+                        <Text>Cancelar</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </Modal>
+    )
+
     return(
         <SafeAreaView style={{flex: 1, backgroundColor: '#240F03'}}>  
-            <Header title={route.params.title}/>
+            <Header screen={'match'} title={route.params.title}/>
+            <ModalTest/>
             <FlatList
-                contentContainerStyle = {{ marginVertical: 15 }}
+                contentContainerStyle = {{ paddingVertical: 30 }}
                 data = {munchkinsCardData}
-                keyExtractor = {item => item.id}
+                keyExtractor = {item => item.tag}
                 renderItem = {MunchkinCard}
                 numColumns = {1}
             />  
-            <MatchFooter/>     
+            {ModalTest()} 
+            <MatchFooter modal={(visible) => setModalIsVisible(visible)}/>   
         </SafeAreaView>
     )
 }
-
-/*<TouchableOpacity
-    onPress={() => {
-        console.log(munchkinsCardData)
-    }}           
->
-    <Text style={{color: 'white', fontSize: 40}}>AQUI!!!</Text>
-</TouchableOpacity>*/

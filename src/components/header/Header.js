@@ -19,10 +19,13 @@ export const Header = (props) => {
             <TouchableOpacity 
                 style={styles.iconPad}
                 onPress={() => {
-                    navigation.dispatch(CommonActions.goBack())
+                    props.screen == 'match' ? 
+                        navigation.navigate('Home')
+                    :
+                    navigation.dispatch(CommonActions.goBack()) 
                 }}
             >
-                <Ionicons style={styles.icon} name="arrow-back-sharp"/>
+                <Ionicons style={styles.icon} name={props.screen == 'match' ? "exit-outline" : "arrow-back-sharp"}/>
             </TouchableOpacity>
             <Text style={styles.text}>{props.title}</Text>
         </View>

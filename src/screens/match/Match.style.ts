@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
         borderRadius: 10,
         flexDirection:'row',
         alignSelf: 'center',
-        marginVertical: 15
+        marginBottom: 30
     },
     cardImage: {
         resizeMode: "contain",
@@ -140,5 +140,34 @@ export const styles = StyleSheet.create({
     },
     statsButtonIcon: {
         color: '#FFFFFF'
+    },
+    modalContainer: {
+        height: 180,
+        width: 250,
+        backgroundColor: '#F2C181',
+        alignItems: 'center',
+        alignSelf: 'center',
+        borderRadius: 15
+    },
+    modalTitleContainer: {
+        marginTop: 40,
+        flex: 1
+    },
+    modalTitleText: {
+        fontSize: 20
+    },
+    modalButtonsContainer: {
+        flexDirection: 'row',
+        marginBottom: 25
+    },
+    modalButtons: {
+        marginHorizontal: 10,
+        height: 30,
+        width: 80,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 2,
+        borderColor: '#000000'
     }
 })

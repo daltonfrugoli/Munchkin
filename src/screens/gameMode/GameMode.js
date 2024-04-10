@@ -14,18 +14,18 @@ import { Header } from '../../components/header/Header';
 export function GameMode(){
 
     return(
-        <SafeAreaView style={ styles.fullBackground }>
+        <SafeAreaView style={styles.fullBackground}>
             <Header title={'Game mode'}/>
-            <ScrollView>
-                <View style={ styles.titleContainer }>
-                    <Text style={ styles.titleText }>Select the</Text>
-                    <Text style={ styles.titleText }>game mode</Text>
+            
+                <View style={styles.titleContainer}>
+                    <Text style={styles.titleText}>Select the</Text>
+                    <Text style={styles.titleText}>game mode</Text>
                 </View>
-                <View style={ styles.buttonsContainer }>
+                <View style={styles.buttonsContainer}>
                     <ModeButtons text={'local game'} press={'AdventureConfig'}/>
                     <ModeButtons text={'online game'} disabled={true}/>
                 </View>
-            </ScrollView>
+           
         </SafeAreaView>
     )
 } 
