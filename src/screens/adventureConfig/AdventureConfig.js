@@ -22,6 +22,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 export function AdventureConfig({navigation}){
 
     const [adventureNames, setAdventureNames] = useState([])
+    const [gendersInfo, setGendersInfo] = useState([])
 
     useEffect(() => {
         db.transaction((qr) => {
@@ -31,6 +32,13 @@ export function AdventureConfig({navigation}){
                 (_, results) => {
                     setAdventureNames(results.rows.raw())
                     console.log(results.rows.raw())
+                } 
+            );
+            qr.executeSql(
+                "SELECT * FROM genders",
+                [],
+                (_, results) => {
+                    setGendersInfo(results.rows.raw())
                 } 
             )
         })
@@ -210,9 +218,10 @@ export function AdventureConfig({navigation}){
                                                 globalVariables.currentGameId = results.rows.raw()[0].id
                                                 setAdventureId(results.rows.raw()[0].id)
                                                 for(var i = 0; i < munchkins.length; i++){
+                                                    var munchkinGender = gendersInfo.filter((gender) => gender.name == munchkins[i].gender)
                                                     qr3.executeSql(
-                                                        "INSERT INTO munchkins (tag, name, level, gear, modfier, game_id) VALUES (?, ?, ?, ?, ?, ?)",
-                                                        [munchkins[i].tag, munchkins[i].name, 1, 0, 0, results.rows.raw()[0].id]
+                                                        "INSERT INTO munchkins (tag, name, level, gear, modfier, game_id, gender_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                                                        [munchkins[i].tag, munchkins[i].name, 1, 0, 0, results.rows.raw()[0].id, munchkinGender[0].id]
                                                     )
                                                 }
                                             }
@@ -227,63 +236,13 @@ export function AdventureConfig({navigation}){
                 >
                     <Text style={styles.startButtonText}>START</Text>
                 </TouchableOpacity>
-
-
-                {/*teste database*/}
-
                 <TouchableOpacity 
                     style={styles.startButton}
                     onPress={() => {
-                        db.transaction((qr) => {
-                            qr.executeSql(
-                                "INSERT INTO games (name, status) " + 
-                                "VALUES (?, ?);",
-                                ['new game', 'progress'],
-                                (qr2, results) => {
-                                    qr2.executeSql(
-                                        "SELECT id FROM games ORDER BY id DESC LIMIT 1;",
-                                        [],
-                                        (qr3, results) => {
-                                            setAdventureId(results.rows.raw()[0].id)
-                                            for(var i = 0; i < munchkins.length; i++){
-                                                qr3.executeSql(
-                                                    "INSERT INTO munchkins (tag, name, level, gear, modfier, game_id) VALUES (?, ?, ?, ?, ?, ?)",
-                                                    [munchkins[i].tag, munchkins[i].name, 1, 0, 0, results.rows.raw()[0].id]
-                                                )
-                                            }
-                                        }
-                                    )
-                                }           
-                            )
-                        })
-                        
+                        console.log(gendersInfo)
                     }}
                 >
-                    <Text style={styles.startButtonText}>teste insert</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity 
-                    style={styles.startButton}
-                    onPress={() => {
-                        /*db.transaction((qr) => {
-                            qr.executeSql(
-                                "SELECT * FROM games",
-                                [],
-                                (_, results) => console.log(results.rows.raw()) 
-                            )
-                        })*/
-                        db.transaction((qr) => {
-                            qr.executeSql(
-                                "SELECT * FROM munchkins",
-                                [],
-                                (_, results) => {
-                                    console.log(results.rows.raw())
-                                } 
-                            )
-                        })
-                    }}
-                >
-                    <Text style={styles.startButtonText}>teste log</Text>
+                    <Text style={styles.startButtonText}>teste</Text>
                 </TouchableOpacity>
             </View>
             {ModalTest()}

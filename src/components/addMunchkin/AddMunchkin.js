@@ -20,10 +20,25 @@ export const AddMunchkin = (props) => {
         if(gender == 'M'){
             setGender('F')
             props.changeGender('F')
+        }else if(gender == 'F'){
+            setGender('NB')
+            props.changeGender('NB')
         }else{
             setGender('M')
             props.changeGender('M')
         }
+    }
+    
+    const genderIconColor = {
+        M: '#268A0B',
+        F: '#AC0A0A',
+        NB: 'grey', 
+    }
+
+    const genderIcon = {
+        M: 'male-sharp',
+        F: 'female-sharp',
+        NB: 'male-female-sharp', 
     }
 
     return(
@@ -45,9 +60,9 @@ export const AddMunchkin = (props) => {
                 onPress={() => {
                     switchGender()
                 }}
-                style={[styles.genderButton, {backgroundColor: gender == 'M' ? '#268A0B': '#AC0A0A'}]}
+                style={[styles.genderButton, {backgroundColor: genderIconColor[gender]}]}
             >
-                <Ionicons style={styles.genderButtonIcon} name={gender == 'M' ? 'male-sharp' : 'female-sharp'}/>
+                <Ionicons style={styles.genderButtonIcon} name={genderIcon[gender]}/>
             </TouchableOpacity>
         </View>     
     )

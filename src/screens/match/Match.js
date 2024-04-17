@@ -41,16 +41,7 @@ export function Match({navigation, route}){
         db.transaction((qr) => {
             qr.executeSql(
                 "UPDATE munchkins SET level = ? WHERE game_id = ? AND tag = ?",
-                [munchkinsCardData[index].level, globalVariables.currentGameId, index],
-                (qr2, results) => {
-                    qr2.executeSql(
-                        "SELECT * FROM munchkins WHERE game_id = ? AND tag = ?",
-                        [globalVariables.currentGameId, index],
-                        (_, results) => {
-                            console.log(results.rows.raw())
-                        }
-                    )
-                }
+                [munchkinsCardData[index].level, globalVariables.currentGameId, index]
             )
         })
     }
@@ -78,16 +69,7 @@ export function Match({navigation, route}){
         db.transaction((qr) => {
             qr.executeSql(
                 "UPDATE munchkins SET gear = ? WHERE game_id = ? AND tag = ?",
-                [munchkinsCardData[index].gear, globalVariables.currentGameId, index],
-                (qr2, results) => {
-                    qr2.executeSql(
-                        "SELECT * FROM munchkins WHERE game_id = ? AND tag = ?",
-                        [globalVariables.currentGameId, index],
-                        (_, results) => {
-                            console.log(results.rows.raw())
-                        }
-                    )
-                }
+                [munchkinsCardData[index].gear, globalVariables.currentGameId, index]
             )
         })
     }
@@ -113,16 +95,7 @@ export function Match({navigation, route}){
         db.transaction((qr) => {
             qr.executeSql(
                 "UPDATE munchkins SET modfier = ? WHERE game_id = ? AND tag = ?",
-                [munchkinsCardData[index].mod, globalVariables.currentGameId, index],
-                (qr2, results) => {
-                    qr2.executeSql(
-                        "SELECT * FROM munchkins WHERE game_id = ? AND tag = ?",
-                        [globalVariables.currentGameId, index],
-                        (_, results) => {
-                            console.log(results.rows.raw())
-                        }
-                    )
-                }
+                [munchkinsCardData[index].mod, globalVariables.currentGameId, index]
             )
         })
     }
@@ -144,10 +117,16 @@ export function Match({navigation, route}){
     }
 
     function switchGender(gender, index){  
-        const alterGender = [...munchkinsCardData];      
-        alterGender[index] = { ...alterGender[index], gender: gender };  
-        setMunchkinsCardData(alterGender);
-    };
+        const alterGender = [...munchkinsCardData]
+        if(gender == 'M'){
+            alterGender[index] = { ...alterGender[index], gender: 'F' }
+        }else if(gender == 'F'){
+            alterGender[index] = { ...alterGender[index], gender: 'NB' }
+        }else{
+            alterGender[index] = { ...alterGender[index], gender: 'M' }
+        }     
+        setMunchkinsCardData(alterGender)
+    }
 
     //componente que renderiza os stats displays
     const StatsCounter = (props) => {
@@ -206,6 +185,18 @@ export function Match({navigation, route}){
         )
     }
 
+    const genderIconColor = {
+        M: '#268A0B',
+        F: '#AC0A0A',
+        NB: 'grey', 
+    }
+
+    const genderIcon = {
+        M: 'male-sharp',
+        F: 'female-sharp',
+        NB: 'male-female-sharp', 
+    }
+
     //componente que renderiza os cards
     const MunchkinCard = ({item, index}) => {
 
@@ -236,12 +227,12 @@ export function Match({navigation, route}){
                     <View style={styles.rightUnderView}>
                         <View style={styles.genderButtonContainer}>
                             <TouchableOpacity
-                                style={[styles.genderButton, {backgroundColor: munchkinsCardData[index].gender == 'M' ? '#268A0B': '#AC0A0A'}]}
+                                style={[styles.genderButton, {backgroundColor: genderIconColor[munchkinsCardData[index].gender]}]}
                                 onPress={() => {
-                                    switchGender(munchkinsCardData[index].gender == 'M' ? 'F' : 'M', index)
+                                    switchGender(munchkinsCardData[index].gender, index)
                                 }}
                             >
-                                <Ionicons style={styles.genderIcon} name={item.gender == 'M' ? 'male-sharp' : 'female-sharp'}/>
+                                <Ionicons style={styles.genderIcon} name={genderIcon[item.gender]}/>
                             </TouchableOpacity>
                         </View> 
                         <View style={styles.totalPowerContainer}>

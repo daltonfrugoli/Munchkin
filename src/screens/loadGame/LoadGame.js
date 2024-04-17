@@ -31,12 +31,6 @@ export function LoadGame({navigation, route}){
         })
     }, [])
 
-    const [munchkins, setMunchkins] = useState([])
-
-    const start = (title) => {
-        navigation.navigate('Match', { data: munchkins, title: title })
-    }
-
     const GamesList = ({item, index}) => {
 
         return(
@@ -48,10 +42,8 @@ export function LoadGame({navigation, route}){
                             "SELECT * FROM munchkins WHERE game_id = ?",
                             [item.id],
                             (_, results) => {
-                                setMunchkins(results.rows.raw())
-                                start(item.name)
+                                navigation.navigate('Match', { data: results.rows.raw(), title: item.name })
                                 globalVariables.currentGameId = item.id
-                                console.log(results.rows.raw())
                             }
                         )
                     })
