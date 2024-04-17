@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 
 import {
     SafeAreaView,
     View,
     Text,
     Image,
-    TouchableOpacity
+    TouchableOpacity,
+    Animated
 } from 'react-native';
 
 import { styles } from './Home.style';
@@ -13,6 +14,17 @@ import { HomeButton } from '../../components/homeButton/HomeButton';
 import { db } from '../../App';
 
 export function Home({navigation, route}){
+
+    const leftMargin = useState(new Animated.Value(0))[0]
+    const [btnClicked, setBtnClicked]  = useState(false)
+    const startAnimation = () => {
+        setBtnClicked(!btnClicked)
+        Animated.timing(leftMargin, {
+            toValue: btnClicked ? 0 : 100,
+            duration: 1000,
+            useNativeDriver: false
+        }).start()
+    }
 
     return(
         <SafeAreaView style={styles.fullScreen}>
@@ -22,7 +34,15 @@ export function Home({navigation, route}){
                     <Image source={require('../../assets/images/pngegg.png')} style={styles.logo}/>
                 </View>
                 <View style={styles.buttonsContainer}>
-                    <TouchableOpacity 
+                    <Animated.View
+                        style={{
+                            height: 50,
+                            width:50,
+                            backgroundColor: 'orange',
+                            marginLeft: leftMargin
+                        }}
+                    ></Animated.View>
+                    <TouchableOpacity
                         style={{width: 60, height: 60, backgroundColor: 'white'}}
                         onPress={() => {
                             db.transaction((qr) => {

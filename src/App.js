@@ -45,13 +45,33 @@ function App(){
       qr.executeSql(
         "CREATE TABLE IF NOT EXISTS " +
         "munchkins " + 
-        "(id INTEGER PRIMARY KEY AUTOINCREMENT, tag INTEGER, name TEXT, level INTEGER, gear INTEGER, modfier INTEGER, game_id INTEGER, FOREIGN KEY(game_id) REFERENCES games(id));"
+        "(id INTEGER PRIMARY KEY AUTOINCREMENT, tag INTEGER, name TEXT, level INTEGER, gear INTEGER, modfier INTEGER, game_id INTEGER, gender_id INTEGER, FOREIGN KEY(game_id) REFERENCES games(id), FOREIGN KEY(gender_id) REFERENCES genders(id));"
       );
-      /*qr.executeSql(
+      qr.executeSql(
         "CREATE TABLE IF NOT EXISTS " +
         "genders " +
-        "(id INTEGER PRIMARY KEY, name TEXT);"
-      );*/
+        "(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT);"
+      );
+      qr.executeSql(
+        "SELECT * FROM genders",
+        [],
+        (qr2, results) => {
+          if(results.rows.length == 0){
+            qr2.executeSql(
+              "INSERT INTO genders(name) VALUES(?)",
+              ['M'] 
+            );
+            qr2.executeSql(
+              "INSERT INTO genders(name) VALUES(?)",
+              ['F']
+            );
+            qr2.executeSql(
+              "INSERT INTO genders(name) VALUES(?)",
+              ['NB']
+            )
+          }
+        }
+      )
     })
   }
 
